@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件间的数据传递</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <counter :count="2" @inc="handleIncrease"></counter>
+    <counter :count="3" @inc="handleIncrease"></counter>
+    <div>{{total}}</div>
+</div>
+
+<script>
+    //声明局部组件
+    var counter={
+        props:["count"],
+        data(){
+          return {
+              /**
+               * 解决方案:
+               * 通过从父组件接收的count数据,复制一份给放到子组件的data中,
+               * 改变子组件自己的number数据,就不会对父组件数据造成影响
+               */
+              number: this.count
+          }
+        },
+        template:"<div @click='handleClick'>{{number}}</div>",
+        methods:{
+            handleClick(){
+                /**
+                 * 父子组件传值有 单向数据流 规定:
+                 * 父组件传递过来的数据,子组件只能使用,子组件不能改变父组件的数据
+                 *
+                 * 一旦接收的count不是基础类型的数据,而是类似object类型,即引用类型的数据,
+                 * 你在子组件中改变了父组件传递过来数据的内容,可能接收的引用类型的数据,还被其他子组件使用,
+                 * 这样一来,你这个子组件改变了接收的内容,还可能对其他子组件造成影响.
+                 *
+                 */
+
+                // this.count++; //此用法错误
+
+                this.number+=2;
+                this.$emit("inc",2);
+            }
+        }
+    };
+
+
+    var vm = new Vue({
+        el: "#app",
+        components:{//注册局部组件
+            counter
+        },
+        data:{
+            total:5
+        },
+        methods:{
+            handleIncrease(step){
+                this.total+=step;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

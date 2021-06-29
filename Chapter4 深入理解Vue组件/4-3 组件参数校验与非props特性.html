@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件参数校验与非props特性</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--属性前加上冒号代表里面是js表达式,不加则代表字符串-->
+    <!--<child :content="'123'"></child>-->
+    <!--<child></child>-->
+    <child content="hello world"></child>
+</div>
+
+<script>
+    //子组件对父组件传来的参数进行一些约束,校验
+    Vue.component("child",{
+        //如果子组件要进行参数约束,props就可以写成对象的形式
+        props:{
+            //content: String //接收的content属性的数据类型为String
+            //content: [String, Number] //接收的content属性的数据类型为String或Number
+            content:{ //content后面还可以定义更复杂的对象
+                type: String, //解释:该child子组件接收一个type为String类型的content的属性
+                //required: false, //定义该属性是否必传
+                //default: "default value" //解释:child子组件接收一个content属性,父组件可以不传,若不传,则接收一个默认值default value
+                validator: function(value){ //还可以自定义validator校验器, 形参value是属性content传入的内容,此时content值为字符串hello world且大于5,通过子组件的校验,不报错
+                    return (value.length > 5)
+                }
+            }
+        },
+        template:"<div></div>"
+    });
+
+    /**
+     * 非props特性,父组件向子组件传递了属性,但是子组件并没有props:{}这块的内容,
+     * 也就是子组件并没有声明要接收父组件传递过来的内容,子组件一旦使用父组件上传递的属性,就会报错.
+     *
+     * 非props特性:
+     *
+     * 1.在子组件中是无法获取父组件的属性的.
+     *
+     * 2.若子组件中也没有使用父组件上的content属性,那么渲染出的DOM中会展示出类似<div content='hello world'></div>的结构.
+     */
+
+    var vm=new Vue({
+        el:"#app"
+    })
+</script>
+
+</body>
+</html>

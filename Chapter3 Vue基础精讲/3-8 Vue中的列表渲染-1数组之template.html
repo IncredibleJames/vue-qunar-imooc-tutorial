@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的列表渲染-数组之template</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--template作为模板占位符,可以帮助我们去包裹一些元素,但是页面渲染时不会出现该节点-->
+
+    <template v-for="(item,index) of list">
+        <div>{{item.text}} --- {{index}}</div>
+        <span>{{item.id}}</span>
+    </template>
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          list: [
+              {
+                  id:"01010101",
+                  text:"hello"
+              },
+              {
+                  id:"01010102",
+                  text:"dell"
+              },
+              {
+                  id:"01010103",
+                  text:"lee"
+              }
+          ]
+      }
+    }
+})
+</script>
+
+</body>
+</html>

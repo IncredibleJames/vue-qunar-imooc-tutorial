@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的条件渲染</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--注意,v-if和v-else连用,两者之间不能有其他元素,否则会编译错误-->
+    <div v-if="show">{{message}}</div>
+    <div v-else>Bye world</div>
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          show:true,
+          message:"hello world"
+      }
+    }
+})
+</script>
+
+</body>
+</html>

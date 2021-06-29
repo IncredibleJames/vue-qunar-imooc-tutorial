@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性,方法及侦听器</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{fullName}}
+    {{age}}
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          firstName:"Dell",
+          lastName:"Lee",
+          fullName:"Dell Lee",
+          age:28
+      }
+    },
+    //watch也具备缓存机制,但是代码比computed复杂
+    watch:{
+        firstName(){
+            console.log("计算过一次!");
+            this.fullName = this.firstName+" "+this.lastName;
+        },
+        lastName(){
+            console.log("计算过一次!");
+            this.fullName = this.firstName+" "+this.lastName;
+        }
+    }
+
+    //用方法不如计算属性方式性能高
+    // methods:{
+    //     fullName(){
+    //         console.log("计算过一次!");
+    //         return this.firstName + " " + this.lastName;
+    //     }
+    // }
+
+    //计算属性, 有一个缓存机制, 该方式语法既简洁同时性能又高
+    // computed:{
+    //     fullName(){
+    //         //当某一个计算属性所依赖的属性没发生改变时,就不会再计算了,会一直用上次的计算结果,提高性能
+    //         console.log("计算过一次!");
+    //         return this.firstName + " " + this.lastName;
+    //     }
+    // }
+})
+</script>
+
+</body>
+</html>

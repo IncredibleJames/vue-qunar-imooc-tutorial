@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue模板语法</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--几个基础的模板语法: 插值表达式, v-text, v-html, 里面都是写js表达式, 而且不仅仅是一个变量-->
+    <div>{{test+' bye'}}</div>
+    <div v-text="test+' bye'"></div>
+    <div v-html="test+' bye'"></div>
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          test:"hello world"
+      }
+    },
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态组件与v-once指令</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <!--component是vue中自带的动态组件,is意思是根据里面表达式值的不同来展示对应的组件-->
+    <!--<component :is="type"></component>-->
+
+    <!--通过v-once指令可以提高一些静态资源的展示效率.-->
+
+    <!--当组件在 <keep-alive> 内被切换，它的 activated 和 deactivated 这两个生命周期钩子函数将会被对应执行。-->
+
+    <keep-alive>
+        <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two>
+    </keep-alive>
+
+    <button @click="handleChange">change</button>
+</div>
+
+<script>
+    Vue.component('child-one',{
+        template:"<div v-once>child-one</div>",
+        created(){
+            console.log('child-one created');
+        },
+        destroyed(){
+            console.log('child-one destroyed');
+        },
+        activated(){
+            console.log('child-one activated');
+        },
+        deactivated(){
+            console.log('child-one deactivated');
+        }
+    });
+    Vue.component('child-two',{
+        template:"<div v-once>child-two</div>",
+        created(){
+            console.log('child-two created');
+        },
+        destroyed(){
+            console.log('child-two destroyed');
+        },
+        activated(){
+            console.log('child-two activated');
+        },
+        deactivated(){
+            console.log('child-two deactivated');
+        }
+    });
+
+    var vm=new Vue({
+        el:"#app",
+        data(){
+            return {
+                type:"child-one"
+            }
+        },
+        methods:{
+            handleChange(){
+                this.type = this.type==="child-one"?"child-two":"child-one";
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

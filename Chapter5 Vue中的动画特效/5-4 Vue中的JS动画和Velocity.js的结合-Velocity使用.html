@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的JS动画和Velocity.js的结合-Velocity使用</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/velocity.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="handleClick">toggle</button>
+    <transition
+        name="fade"
+        @before-enter="handleBeforeEnter"
+        @enter="handleEnter"
+        @after-enter="handleAfterEnter"
+    >
+        <div v-if="show">hello world</div>
+    </transition>
+</div>
+
+
+<script>
+    /*
+    Velocity 是一个简单易用、高性能、功能丰富的轻量级JS动画库。
+
+    $element.velocity({
+        width: "500px",        // 动画属性 宽度到 "500px" 的动画
+        property2: value2      // 属性示例
+    }, {
+        /!* Velocity 动画配置项的默认值 *!/
+        duration: 400,         // 动画执行时间
+        easing: "swing",       // 缓动效果
+        queue: "",             // 队列
+        begin: undefined,      // 动画开始时的回调函数
+        progress: undefined,   // 动画执行中的回调函数（该函数会随着动画执行被不断触发）
+        complete: undefined,   // 动画结束时的回调函数
+        display: undefined,    // 动画结束时设置元素的 css display 属性
+        visibility: undefined, // 动画结束时设置元素的 css visibility 属性
+        loop: false,           // 循环
+        delay: false,          // 延迟
+        mobileHA: true         // 移动端硬件加速（默认开启）
+    });*/
+
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                show: true
+            }
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+            },
+            handleBeforeEnter(el){//el: 被transition包裹的div标签, done: 钩子函数执行完成的回调函数
+                el.style.opacity = 0;
+            },
+            handleEnter(el,done){
+                Velocity(el,{
+                    opacity:1
+                },{
+                    duration:1000,
+                    complete:done
+                })
+            },
+            handleAfterEnter(el){
+                console.log("animation end")
+            }
+        }
+    })
+</script>
+</body>
+</html>

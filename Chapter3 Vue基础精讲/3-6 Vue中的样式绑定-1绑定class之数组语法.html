@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的样式绑定-数组语法</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .activated {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--class的数组绑定-->
+    <div :class="[activated, activatedOne]" @click="handleDivClick">hello world</div>
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          activated: "",
+          activatedOne: "activated-one"
+      }
+    },
+    methods:{
+        handleDivClick(){
+            this.activated = this.activated==="activated"?"":"activated";
+        }
+    }
+})
+</script>
+
+</body>
+</html>

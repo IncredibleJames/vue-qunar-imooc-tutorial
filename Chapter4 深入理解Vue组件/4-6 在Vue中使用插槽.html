@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在Vue中使用插槽</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--<child content="<p>Dell</p>"></child>-->
+    <child>
+        <!--<h1>Dell</h1>-->
+    </child>
+</div>
+
+<script>
+    /*
+     * 当子组件有一部分内容是根据父组件传递过来的DOM进行显示的时候,
+     * 可以不用v-html和props属性传值这种语法了(缺点:1可读性差,2添加了不必要的DOM标签,此例中为div),
+     * 可用插槽替代
+     */
+    /*Vue.component('child',{
+        props:['content'],
+        template:`<div>
+                       <p>Hello</p>
+                       <div v-html='this.content'></div>
+                  </div>`
+    });*/
+
+
+    //如果父组件使用子组件时,不传递插槽内容,那么子组件插槽的默认内容就会显示出来,所以slot标签还可以定义插槽默认内容
+    //slot显示的内容是父组件传递给子组件的所有内容
+    Vue.component('child',{
+        props:['content'],
+        template:`<div>
+                       <p>Hello</p>
+                       <slot>默认内容</slot>
+                  </div>`
+    });
+
+    var vm=new Vue({
+        el:"#app",
+        methods:{
+        }
+    })
+</script>
+
+</body>
+</html>

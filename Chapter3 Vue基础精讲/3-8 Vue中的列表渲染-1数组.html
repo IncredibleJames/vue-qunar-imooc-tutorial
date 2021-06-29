@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的列表渲染-数组</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--不推荐使用index作为key值,因为在频繁操作dom对应数据时,还是比较耗性能的.
+        一般在真实场景中,使用后端返回的数据的id作为key值.
+
+        想要性能达到最优,写上key值同时不要使用index作为key值,而是用数据id作为key值.
+        key值只要在循环中唯一即可,不必在项目中唯一.
+
+        key值只能写在真实的dom节点上,如div,不可以写在template模板占位符上.-->
+
+    <div v-for="(item,index) of list"
+         :key="item.id">
+        {{item.text}} --- {{index}} --- {{item.id}}
+    </div>
+</div>
+
+<script>
+//需要使用vue提供的7个数组变异方法来操作数组:
+// push pop shift unshift splice sort reverse
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          list: [
+              {
+                  id:"01010101",
+                  text:"hello"
+              },
+              {
+                  id:"01010102",
+                  text:"dell"
+              },
+              {
+                  id:"01010103",
+                  text:"lee"
+              }
+          ]
+      }
+    }
+})
+
+//    除了以上的数组变异方法,还可以通过改变数据的引用地址改变数据.
+//    如:要使list[1].text='DELL',可以让vm.list等于一个新的引用,这样数据变化,页面也会跟着改变.
+
+/*    vm.list = [
+        {
+            id:"01010101",
+            text:"hello"
+        },
+        {
+            id:"01010102",
+            text:"DELL"
+        },
+        {
+            id:"01010103",
+            text:"lee"
+        }
+    ]*/
+</script>
+
+</body>
+</html>

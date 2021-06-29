@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据展示，方法绑定</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <!--2个花括号的语法称作插值表达式-->
+
+   <!-- <h1>hello {{number}}</h1>
+    <h2 v-text="number"></h2>
+    <h3 v-html="number"></h3>-->
+
+    <!--v-html和v-text区别：前者会转译（能识别html代码），后者不会-->
+
+    <!--<div v-html="content"></div>
+    <div v-text="content"></div>-->
+
+    <!--<div v-on:click="handleClick">
+        {{content}}
+    </div>-->
+
+    <!-- v-on:的简写：@符号，今后一般都用@符号绑定事件，更简洁 -->
+    <div @click="handleClick">
+        {{content}}
+    </div>
+</div>
+
+<script>
+    //主要内容：
+    //1如何给一个元素绑定事件v-on
+    //2事件触发后，方法写在vue实例的methods方法中
+    //3方法触发后，想让页面变化不需要直接操作DOM，只需要通过如this.content改变vue实例中的数据即可，
+    // vue实例会监听到数据的改变，自动对模板进行更新，页面也就自动跟着变化
+
+    /**
+     * 以往是面向DOM编程，而今vueJS是面向数据编程
+     * 当数据发生改变，页面就会自动发生变化
+     */
+    new Vue({
+        el: "#root",
+        data: {
+//            msg: "world",
+//            number: 123
+//            content:"<h1>hail hydra</h1>"
+            content:"hello"
+        },
+        methods:{
+            handleClick:function(){
+                //this.content指的是该vue实例中data下面content的内容
+                this.content="world";
+            }
+        }
+    })
+</script>
+</body>
+</html>

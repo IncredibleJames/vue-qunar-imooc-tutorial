@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性的setter和getter</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{fullName}}
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          firstName:"Dell",
+          lastName:"Lee"
+      }
+    },
+    computed:{
+        fullName:{
+            get:function(){
+                return this.firstName + " " + this.lastName;
+            },
+            //set可以通过设置一个值,来改变计算属性相关联的值,又会引起fullName的重新计算,页面又会跟着变化成新的内容
+            //e.g. 语句vm.fullName='mike wang'; 会调用该set方法, 页面重新显示成'mike wang'
+            set:function(value){
+                var arr=value.split(" ");
+                this.firstName=arr[0];
+                this.lastName=arr[1];
+            }
+        }
+    }
+})
+</script>
+
+</body>
+</html>

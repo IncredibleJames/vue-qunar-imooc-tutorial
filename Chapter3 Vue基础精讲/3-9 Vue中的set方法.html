@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的列表渲染-对象</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--三个参数分别是键值,键名,索引-->
+    <div v-for="(item,key,index) of userInfo">
+        {{item}} --- {{key}} -- {{index}}
+    </div>
+</div>
+
+<script>
+// 想要修改对象的值,直接修改对象的引用即可.
+
+/*如vm.userInfo={
+    name:"DELL",
+    age:28,
+    gender:"male",
+    salary:"secret"
+ }*/
+
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          userInfo:{
+              name:"dell",
+              age:28,
+              gender:"male",
+              salary:"secret"
+          }
+      }
+    }
+})
+</script>
+
+</body>
+</html>

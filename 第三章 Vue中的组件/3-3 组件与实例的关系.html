@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>
+        <input type="text" v-model="inputValue">
+        <button @click="handleClick">提交</button>
+    </div>
+    <ul>
+        <todo-item v-for="(item, index) of list" :key="index" :content="item"></todo-item>
+    </ul>
+</div>
+
+<script>
+
+    //每一个组件都是Vue的一个实例，上面同样可以定义methods/computed等属性。任何一个Vue项目都是由若干个Vue的实例组成
+
+    //证明一个组件就是一个Vue的实例：
+    Vue.component("todo-item", {
+        props: ['content'],
+        template: "<li @click='handleClick'>{{content}}</li>",//该li标签单独拆成了一个小的组件进行管理
+        methods: {
+            handleClick: function () {
+                alert(this.content + " clicked");
+            }
+        }
+    });
+
+    //如果Vue的实例中没有定义template模板，Vue会找到挂载点'#root'下所有DOM标签，来作为Vue的模板
+
+    //每一个Vue的实例或者组件都统称为vue的组件，因为每一个组件就是一个vue实例，反之，每一个vue实例也都是一个组件
+    new Vue({
+        el: "#root",
+        data: {
+            inputValue: "",
+            list: []
+        },
+        methods: {
+            handleClick: function () {
+                this.list.push(this.inputValue);
+                this.inputValue = "";
+            }
+        }
+    });
+</script>
+</body>
+</html>

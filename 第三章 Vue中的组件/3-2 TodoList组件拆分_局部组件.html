@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>
+        <input type="text" v-model="inputValue">
+        <button @click="handleClick">提交</button>
+    </div>
+    <ul>
+        <todo-item v-for="(item, index) of list" :key="index" :content="item"></todo-item>
+    </ul>
+</div>
+
+<script>
+
+    //局部组件
+    var TodoItem = {
+        template: "<li>{{content}}</li>",
+        props: ["content"]
+    };
+
+
+    new Vue({
+        el: "#root",
+//        如果使用局部组件，一定要通过components进行注册，
+        components: {
+//            局部组件声明，表示通过todo-item标签来使用
+            "todo-item": TodoItem
+        },
+        data: {
+            inputValue: "",
+            list: []
+        },
+        methods: {
+            handleClick: function () {
+                this.list.push(this.inputValue);
+                this.inputValue = "";
+            }
+        }
+    });
+</script>
+</body>
+</html>

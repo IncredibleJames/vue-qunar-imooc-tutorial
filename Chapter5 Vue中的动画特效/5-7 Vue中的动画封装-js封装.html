@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中动画的封装</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="handleBtnClick">toggle</button>
+
+    <fade :show="show">
+        <div>hello world</div>
+    </fade>
+
+    <fade :show="show">
+        <h1>Hello World!</h1>
+    </fade>
+</div>
+
+<script>
+    //JS封装,比较推荐这种动画封装方式
+
+    /*注意:
+        在Vue中，是没有办法通过v-show的方式控制slot插槽或template占位符标签的显示的。
+        因为slot和template本身并不是一个HTML元素，而v-show是通过display属性来控制元素的,
+        所以要控制slot和template只能使用v-if.
+    */
+
+    Vue.component("fade",{
+        props:['show'],
+        template:`
+            <transition
+                @before-enter="handleBeforeEnter"
+                @enter="handleEnter"
+            >
+                <slot v-if="show"></slot>
+            </transition>
+        `,
+        methods:{
+            handleBeforeEnter(el){
+                el.style.color='red';
+            },
+            handleEnter(el,done){
+                setTimeout(()=>{
+                    el.style.color='green';
+                    done();//代码执行完一定要手动调用done回调函数
+                },2000)
+            }
+        }
+    });
+
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                show:true
+            }
+        },
+        methods: {
+            handleBtnClick() {
+                this.show = !this.show;
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用组件的细节点</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--细节点1: 使用is属性解决模板标签上出现的小bug-->
+    <table>
+        <tbody>
+        <!--html5规范中,要求table中必须要有tbody,tbody中要有tr.
+
+        tbody中要用组件row,但是不能直接写row,
+        用is表示这里虽然写的是tr,但实际上是row组件,
+        这样写既能保证它是我们要的组件,又能符合h5的规范-->
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    Vue.component("row", {
+        template: "<tr><td>this is a row</td></tr>"
+    })
+
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {}
+        }
+    });
+
+    /**
+     * 细节点2:
+     *
+     * 在根组件中data直接定义为对象,不会出现问题,
+     * 但是当在子组件中定义data时,要求data一定要是一个函数,返回一个对象.
+     *
+     * 因为一个子组件不像根组件一样,只会调用一次,而是会被调用多次,通过函数返回一个对象,
+     * 让每一个子组件都拥有一个独立的数据存储,这样就不会出现子组件相互影响的情况.
+     */
+
+</script>
+
+</body>
+</html>

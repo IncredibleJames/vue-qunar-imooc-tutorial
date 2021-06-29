@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的样式绑定-绑定内联样式之数组语法</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--内联样式绑定之数组语法-->
+    <div :style="[styleObj, styleObj2]" @click="handleDivClick">hello world</div>
+</div>
+
+<script>
+var vm=new Vue({
+    el:"#app",
+    data(){
+      return {
+          styleObj:{
+              color:"black",
+              fontSize:"30px"//对象形式时,fontSize等要大写
+          },
+          styleObj2:{
+              background:"yellow"
+          }
+      }
+    },
+    methods:{
+        handleDivClick(){
+            this.styleObj.color = this.styleObj.color==="black"?"red":"black";
+        }
+    }
+})
+</script>
+
+</body>
+</html>

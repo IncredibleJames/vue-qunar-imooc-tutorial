@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    名：<input type="text" v-model="firstName">
+    姓：<input type="text" v-model="lastName">
+    <div>{{fullName}}</div>
+
+    <div>{{count}}</div>
+</div>
+
+<script>
+    new Vue({
+        el: "#root",
+        data: {
+            firstName: "",
+            lastName: "",
+            count: 0
+        },
+        /**
+         * computed指一个属性通过其他属性计算而来。
+         * 好处：如果firstName和lastName都没改变，它会使用上一次计算结果的缓存显示在页面上；
+         * 若该计算属性所依赖的其他数据有改变才会重新计算，因此，computed计算属性的性能比较高。
+         */
+        computed: {
+            //fullName定义在computed中，表示是一个计算属性
+            fullName: function () {
+                return this.firstName + " " + this.lastName;
+            }
+        },
+        /**
+         * 侦听器，侦听数据或计算属性的变化，一旦数据改变，就可在侦听器中做相应的业务逻辑。
+         */
+        watch: {
+            /*firstName: function () {
+                this.count++;
+            },
+            lastName: function () {
+                this.count++;
+            }*/
+            //也可以直接侦听计算属性的变化
+            fullName:function(){
+                this.count++;
+            }
+        }
+    });
+
+    //imooc notes: 有的时候需要缓存的数据就用computed,不需要缓存数据而且可以及时响应就用methods？
+</script>
+</body>
+</html>
